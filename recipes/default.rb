@@ -5,3 +5,4 @@
 # Copyright:: 2017, The Authors, All Rights Reserved.
 
 include_recipe 'rasposmc::transmission'
+include_recipe 'rasposmc::sickrage'
