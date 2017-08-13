@@ -1,6 +1,19 @@
+# Define packages and services
+
 package 'python2.7' do
   action :nothing
 end
+
+service 'sickrage' do
+  action :nothing
+end
+
+group 'sickrage'
+user 'sickrage' do 
+  group 'sickrage'
+end
+
+# Donwload and extrac sickrage
 
 bash 'download latest sickrage' do
   cwd '/tmp'
@@ -25,20 +38,24 @@ bash 'extract latest sickrage' do
   notifies :install, 'package[python2.7]', :immediately
 end
 
+# Create sickrage daemon config
+
+template '/etc/default/sickrage' do
+  source 'sickrage/sickrage.erb'
+  variables ({
+    srdata: node['sickrage']['data-dir']
+  })
+  group 'sickrage'
+  owner 'sickrage'
+end
+
+# Create, register and start sickrage deamon
+
 remote_file '/etc/init.d/sickrage' do
   source 'file:///opt/sickrage/runscripts/init.debian'
   group 'root'
   owner 'root'
   mode 0755
-end
-
-service 'sickrage' do
-  action :nothing
-end
-
-group 'sickrage'
-user 'sickrage' do 
-  group 'sickrage'
 end
 
 execute 'chown -R sickrage:sickrage /opt/sickrage' do

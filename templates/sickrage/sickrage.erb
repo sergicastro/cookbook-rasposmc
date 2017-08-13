@@ -1,0 +1,12 @@
+## SR_USER=         #$RUN_AS, username to run sickrage under, the default is sickrage
+## SR_GROUP=        #$RUN_GROUP, group to run sickrage under, the default is sickrage
+## SR_HOME=         #$APP_PATH, the location of SickBeard.py, the default is /opt/sickrage
+<% if @srdata.nil? %>
+## SR_DATA=         #$DATA_DIR, the location of sickbeard.db, cache, logs, the default is /opt/sickrage
+<% else %>
+SR_DATA=<%= @srdata %>         #$DATA_DIR, the location of sickbeard.db, cache, logs, the default is /opt/sickrage
+<% end %>
+## SR_PIDFILE=      #$PID_FILE, the location of sickrage.pid, the default is /var/run/sickrage/sickrage.pid
+## PYTHON_BIN=      #$DAEMON, the location of the python binary, the default is /usr/bin/python2.7
+## SR_OPTS=         #$EXTRA_DAEMON_OPTS, extra cli option for sickrage, i.e. " --config=/home/sickrage/config.ini"
+## SSD_OPTS=        #$EXTRA_SSD_OPTS, extra start-stop-daemon option like " --group=users" " "

@@ -28,3 +28,5 @@ suites:
             rpc-password: "testpsswd"
             download-dir: "/tmp/testdown"
             incomplete-dir: "/tmp/testinc"
+        sickrage:
+            data-dir: "/tmp/sickrage-data"

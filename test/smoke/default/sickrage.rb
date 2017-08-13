@@ -16,6 +16,11 @@ describe service('sickrage') do
   it { should be_running }
 end
 
+describe file('/etc/default/sickrage') do
+  it { should exist }
+  its('content') { should match /SR_DATA=\/tmp\/sickrage-data/ }
+end
+
 describe port(8081) do
   it { should be_listening }
 end
