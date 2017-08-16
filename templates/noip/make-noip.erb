@@ -1,0 +1,19 @@
+#!/usr/bin/expect -f
+set timeout 15
+spawn sudo make install
+
+# set authorization
+expect "*login/email*"
+send -- "<%= @username %>\r"
+sleep 5
+expect "*password*"
+send -- "<%= @password %>\n\r"
+sleep 3
+
+# complete with default interval and no updates
+expect "*"
+send -- "\r"
+expect "*"
+send -- "N\r"
+
+expect eof

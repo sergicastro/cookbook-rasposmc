@@ -13,7 +13,7 @@ verifier:
   name: inspec
 
 platforms:
-  - name: ubuntu-16.04
+  - name: ubuntu-17.04
   - name: debian-8.8
 
 suites:
@@ -30,3 +30,6 @@ suites:
             incomplete-dir: "/tmp/testinc"
         sickrage:
             data-dir: "/tmp/sickrage-data"
+        noip:
+            username: "noipuser"
+            password: "noippassword"

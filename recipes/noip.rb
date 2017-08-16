@@ -1,6 +1,13 @@
+# Prerequisites
+
+unless node['noip'] && node['noip']['username'] && node['noip']['password']
+  Chef::Application.fatal! "The noip username and password are required for noip recipe.
+  Supply the attributes: node['noip']['username'] and node['noip']['password']"
+end
+
 # Define packages
 
-package 'build-essential' do
+package 'expect' do
   action :nothing
 end
 
@@ -20,14 +27,25 @@ bash 'extract noip' do
   EOH
 end
 
-## TODO: Must be manual until multiple lines stdin redirect work
-# bash 'compile noip' do
-#   cwd '/tmp/noip-2.1.9-1'
-#   code <<-EOH
-#     make install
-#   EOH
-#   notifies :install, 'package[build-essential]', :before
-# end
+# Install noip
+
+template '/tmp/noip-2.1.9-1/make-noip' do
+  source 'noip/make-noip.erb'
+  variables ({
+      username: node['noip']['username'],
+      password: node['noip']['password']
+  })
+  mode 0774
+end
+
+bash 'compile noip' do
+  cwd '/tmp/noip-2.1.9-1'
+  code <<-EOH
+    ./make-noip | tee make-noip.out
+  EOH
+  notifies :install, 'package[expect]', :before
+  notifies :purge, 'package[expect]', :immediately
+end
 
 # Configure as a service
 
@@ -42,5 +60,5 @@ bash 'register noip service' do
   code <<-EOH
     update-rc.d noip defaults
   EOH
-  notifies :start, 'service[noip]', :immediately
+  notifies :start, 'service[noip]', :delayed
 end

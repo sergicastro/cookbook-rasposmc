@@ -67,5 +67,5 @@ bash 'register sickrage service' do
   code <<-EOH
     update-rc.d sickrage defaults
   EOH
-  notifies :start, 'service[sickrage]', :immediately
+  notifies :start, 'service[sickrage]', :delayed
 end
