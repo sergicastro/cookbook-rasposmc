@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Define packages and services
 
 package 'python2.7' do
@@ -9,7 +11,7 @@ service 'sickrage' do
 end
 
 group 'sickrage'
-user 'sickrage' do 
+user 'sickrage' do
   group 'sickrage'
 end
 
@@ -18,7 +20,7 @@ end
 bash 'download latest sickrage' do
   cwd '/tmp'
   code <<-EOH
-    wget https://github.com/SickRage/SickRage/archive/master.zip    
+    wget https://github.com/SickRage/SickRage/archive/master.zip
   EOH
 end
 
@@ -42,9 +44,9 @@ end
 
 template '/etc/default/sickrage' do
   source 'sickrage/sickrage.erb'
-  variables ({
+  variables(
     srdata: node['sickrage']['data-dir']
-  })
+  )
   group 'sickrage'
   owner 'sickrage'
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe service('noip') do
   it { should be_running }
 end

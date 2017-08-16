@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 name 'rasposmc'
-maintainer 'The Authors'
+maintainer 'Sergi Castro'
 maintainer_email 'sergikstro@gmail.com'
 license 'All Rights Reserved'
 description 'Installs/Configures rasposmc'

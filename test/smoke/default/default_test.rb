@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # # encoding: utf-8
 
 # Inspec test for recipe rasposmc::default

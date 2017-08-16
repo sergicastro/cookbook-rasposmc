@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 describe package('unzip') do
   it { should_not be_installed }
@@ -18,7 +19,7 @@ end
 
 describe file('/etc/default/sickrage') do
   it { should exist }
-  its('content') { should match /SR_DATA=\/tmp\/sickrage-data/ }
+  its('content') { should match %r{SR_DATA=\/tmp\/sickrage-data} }
 end
 
 describe port(8081) do

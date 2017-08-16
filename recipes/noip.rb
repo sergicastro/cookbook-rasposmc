@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Prerequisites
 
 unless node['noip'] && node['noip']['username'] && node['noip']['password']
@@ -31,10 +33,10 @@ end
 
 template '/tmp/noip-2.1.9-1/make-noip' do
   source 'noip/make-noip.erb'
-  variables ({
-      username: node['noip']['username'],
-      password: node['noip']['password']
-  })
+  variables(
+    username: node['noip']['username'],
+    password: node['noip']['password']
+  )
   mode 0774
 end
 
