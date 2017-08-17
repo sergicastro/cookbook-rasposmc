@@ -1,0 +1,29 @@
+---
+driver:
+  name: docker
+  privileged: true
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: ubuntu-17.04
+  - name: debian-8.8
+
+suites:
+  - name: default
+    run_list:
+      - recipe[rasposmc::default]
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+    attributes:
+        transmission:
+            rpc-password: "testpsswd"
+            download-dir: "/tmp/testdown"
+            incomplete-dir: "/tmp/testinc"
+        sickrage:
+            data-dir: "/tmp/sickrage-data"
+        noip:
+            username: "noipuser"
+            password: "noippassword"

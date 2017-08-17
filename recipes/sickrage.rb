@@ -16,12 +16,8 @@ user 'sickrage' do
 end
 
 # Donwload and extrac sickrage
-
-bash 'download latest sickrage' do
-  cwd '/tmp'
-  code <<-EOH
-    wget https://github.com/SickRage/SickRage/archive/master.zip
-  EOH
+remote_file '/tmp/master.zip' do
+  source 'https://github.com/SickRage/SickRage/archive/master.zip'
 end
 
 package 'unzip'

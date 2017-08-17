@@ -1,8 +1,36 @@
 # frozen_string_literal: true
 
-task :rubocop do
-  sh 'rubocop'
+require 'bundler/setup'
+
+desc 'Run unit checks'
+namespace :unit do
+  task :rubocop do
+    sh 'rubocop'
+  end
 end
 
-task test: :rubocop
-task default: :test
+# task test: :rubocop
+# task default: :test
+
+desc 'Run Test Kitchen integration tests'
+namespace :integration do
+  desc 'Run integration tests with kitchen-vagrant'
+  task :vagrant do
+    require 'kitchen'
+    Kitchen.logger = Kitchen.default_file_logger
+    Kitchen::Config.new.instances.each { |instance| instance.test(:always) }
+  end
+
+  desc 'Run integration tests with kitchen-docker'
+  task :docker, [:instance] do |_t, args|
+    args.with_defaults(instance: 'default-ubuntu-1404')
+    require 'kitchen'
+    Kitchen.logger = Kitchen.default_file_logger
+    loader = Kitchen::Loader::YAML.new(local_config: '.kitchen.docker.yml')
+    instances = Kitchen::Config.new(loader: loader).instances
+    # Travis CI Docker service does not support destroy:
+    instances.get(args.instance).verify
+  end
+end
+
+task default: %w[unit:rubocop integration:vagrant]
