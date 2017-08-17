@@ -1,0 +1,7 @@
+language: ruby
+rvm:
+    - 2.3.4
+install:
+    - bundle install --retry=3
+script:
+    - bundle exec rake
