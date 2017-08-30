@@ -1,7 +1,15 @@
 ---
 driver:
   name: docker
+  use_sudo: false
   privileged: true
+  forward:
+    - 9091:9091
+    - 8180:8180
+  cmd: /bin/bash 
+  dockerfile: Dockerfile
+  # run_options:
+  #   - /bin/bash
 
 verifier:
   name: inspec
